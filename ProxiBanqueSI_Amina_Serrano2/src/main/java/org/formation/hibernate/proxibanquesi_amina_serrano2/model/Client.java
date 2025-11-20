@@ -1,10 +1,12 @@
 package org.formation.hibernate.proxibanquesi_amina_serrano2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,6 +23,10 @@ public class Client {
     private String codePostal;
     private String ville;
     private String telephone;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<CompteBancaire> comptes = new ArrayList<>();
 
     public Client(String nom, String prenom, String telephone) {
         this.nom = nom;

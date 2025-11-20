@@ -13,28 +13,28 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
-    private final ClientRepository repository;
+    private final ClientRepository clientDao;
 
     @PostConstruct
     private void initDb() {
-        repository.saveAll(List.of(
-                new Client("Serrano", "Amina", "0766231133"),
-                new Client("Dating", "Bro", "0609876543")
-        ));
+        Client premierClient = new Client("Serrano", "Amina", "0766231133");
+        Client deuxiemeClient = new Client("Dating", "Bro", "0609876543");
+
+        clientDao.saveAll(List.of(premierClient, deuxiemeClient));
     }
 
     @Override
     public List<Client> getClients() {
-        return repository.findAll();
+        return clientDao.findAll();
     }
 
     @Override
-    public Client createClient(Client client) {
-        return repository.save(client);
+    public Client createClient(Client nouveauClient) {
+        return clientDao.save(nouveauClient);
     }
 
     @Override
-    public Optional<Client> getClient(Long id) {
-        return repository.findById(id);
+    public Optional<Client> getClient(Long identifiant) {
+        return clientDao.findById(identifiant);
     }
 }
